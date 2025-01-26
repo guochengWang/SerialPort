@@ -31,9 +31,10 @@
             this.components = new System.ComponentModel.Container();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
             this.groupControl3 = new DevExpress.XtraEditors.GroupControl();
+            this.cycleTime = new System.Windows.Forms.TextBox();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
-            this.checkEdit2 = new DevExpress.XtraEditors.CheckEdit();
-            this.checkEdit1 = new DevExpress.XtraEditors.CheckEdit();
+            this.selectCycle = new DevExpress.XtraEditors.CheckEdit();
+            this.randomCheck = new DevExpress.XtraEditors.CheckEdit();
             this.sendHEX = new DevExpress.XtraEditors.CheckEdit();
             this.sendASCII = new DevExpress.XtraEditors.CheckEdit();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
@@ -59,16 +60,15 @@
             this.groupControl4 = new DevExpress.XtraEditors.GroupControl();
             this.dataLog = new DevExpress.XtraEditors.MemoEdit();
             this.panelControl4 = new DevExpress.XtraEditors.PanelControl();
-            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            this.sendBtn = new DevExpress.XtraEditors.SimpleButton();
             this.sendInfo = new DevExpress.XtraEditors.MemoEdit();
             this.serialPort = new System.IO.Ports.SerialPort(this.components);
-            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).BeginInit();
             this.groupControl3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.checkEdit2.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.checkEdit1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectCycle.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.randomCheck.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sendHEX.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sendASCII.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
@@ -108,10 +108,10 @@
             // 
             // groupControl3
             // 
-            this.groupControl3.Controls.Add(this.textBox1);
+            this.groupControl3.Controls.Add(this.cycleTime);
             this.groupControl3.Controls.Add(this.labelControl6);
-            this.groupControl3.Controls.Add(this.checkEdit2);
-            this.groupControl3.Controls.Add(this.checkEdit1);
+            this.groupControl3.Controls.Add(this.selectCycle);
+            this.groupControl3.Controls.Add(this.randomCheck);
             this.groupControl3.Controls.Add(this.sendHEX);
             this.groupControl3.Controls.Add(this.sendASCII);
             this.groupControl3.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -121,6 +121,15 @@
             this.groupControl3.TabIndex = 2;
             this.groupControl3.Text = "发送设置";
             // 
+            // cycleTime
+            // 
+            this.cycleTime.Location = new System.Drawing.Point(79, 98);
+            this.cycleTime.Name = "cycleTime";
+            this.cycleTime.Size = new System.Drawing.Size(67, 22);
+            this.cycleTime.TabIndex = 2;
+            this.cycleTime.Text = "1000";
+            this.cycleTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // labelControl6
             // 
             this.labelControl6.Location = new System.Drawing.Point(152, 101);
@@ -129,21 +138,21 @@
             this.labelControl6.TabIndex = 2;
             this.labelControl6.Text = "ms";
             // 
-            // checkEdit2
+            // selectCycle
             // 
-            this.checkEdit2.Location = new System.Drawing.Point(10, 99);
-            this.checkEdit2.Name = "checkEdit2";
-            this.checkEdit2.Properties.Caption = "循环周期";
-            this.checkEdit2.Size = new System.Drawing.Size(85, 19);
-            this.checkEdit2.TabIndex = 4;
+            this.selectCycle.Location = new System.Drawing.Point(10, 99);
+            this.selectCycle.Name = "selectCycle";
+            this.selectCycle.Properties.Caption = "循环周期";
+            this.selectCycle.Size = new System.Drawing.Size(85, 19);
+            this.selectCycle.TabIndex = 4;
             // 
-            // checkEdit1
+            // randomCheck
             // 
-            this.checkEdit1.Location = new System.Drawing.Point(10, 67);
-            this.checkEdit1.Name = "checkEdit1";
-            this.checkEdit1.Properties.Caption = "生成随机数";
-            this.checkEdit1.Size = new System.Drawing.Size(112, 19);
-            this.checkEdit1.TabIndex = 3;
+            this.randomCheck.Location = new System.Drawing.Point(10, 67);
+            this.randomCheck.Name = "randomCheck";
+            this.randomCheck.Properties.Caption = "生成随机数";
+            this.randomCheck.Size = new System.Drawing.Size(112, 19);
+            this.randomCheck.TabIndex = 3;
             // 
             // sendHEX
             // 
@@ -206,14 +215,17 @@
             this.recSaveFile.Properties.Caption = "接收保存到文件";
             this.recSaveFile.Size = new System.Drawing.Size(112, 19);
             this.recSaveFile.TabIndex = 3;
+            this.recSaveFile.CheckedChanged += new System.EventHandler(this.recSaveFile_Click);
             // 
             // recLog
             // 
+            this.recLog.EditValue = true;
             this.recLog.Location = new System.Drawing.Point(10, 61);
             this.recLog.Name = "recLog";
             this.recLog.Properties.Caption = "按日志模式显示";
             this.recLog.Size = new System.Drawing.Size(112, 19);
             this.recLog.TabIndex = 2;
+            this.recLog.CheckedChanged += new System.EventHandler(this.recLog_CheckedChanged);
             // 
             // recHEX
             // 
@@ -391,7 +403,7 @@
             // 
             // panelControl4
             // 
-            this.panelControl4.Controls.Add(this.simpleButton1);
+            this.panelControl4.Controls.Add(this.sendBtn);
             this.panelControl4.Controls.Add(this.sendInfo);
             this.panelControl4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelControl4.Location = new System.Drawing.Point(2, 469);
@@ -399,14 +411,15 @@
             this.panelControl4.Size = new System.Drawing.Size(639, 94);
             this.panelControl4.TabIndex = 1;
             // 
-            // simpleButton1
+            // sendBtn
             // 
-            this.simpleButton1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.simpleButton1.Location = new System.Drawing.Point(561, 2);
-            this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(76, 90);
-            this.simpleButton1.TabIndex = 1;
-            this.simpleButton1.Text = "发送";
+            this.sendBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sendBtn.Location = new System.Drawing.Point(561, 2);
+            this.sendBtn.Name = "sendBtn";
+            this.sendBtn.Size = new System.Drawing.Size(76, 90);
+            this.sendBtn.TabIndex = 1;
+            this.sendBtn.Text = "发送";
+            this.sendBtn.Click += new System.EventHandler(this.sendInfoBtn_Click);
             // 
             // sendInfo
             // 
@@ -416,14 +429,9 @@
             this.sendInfo.Size = new System.Drawing.Size(559, 90);
             this.sendInfo.TabIndex = 0;
             // 
-            // textBox1
+            // serialPort
             // 
-            this.textBox1.Location = new System.Drawing.Point(79, 98);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(67, 22);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "1000";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.serialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort_DataReceived);
             // 
             // MainForm
             // 
@@ -442,8 +450,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).EndInit();
             this.groupControl3.ResumeLayout(false);
             this.groupControl3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.checkEdit2.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.checkEdit1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectCycle.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.randomCheck.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sendHEX.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sendASCII.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
@@ -482,7 +490,7 @@
         private DevExpress.XtraEditors.GroupControl groupControl3;
         private DevExpress.XtraEditors.PanelControl panelControl4;
         private DevExpress.XtraEditors.GroupControl groupControl4;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.SimpleButton sendBtn;
         private DevExpress.XtraEditors.MemoEdit sendInfo;
         private DevExpress.XtraEditors.MemoEdit dataLog;
         private DevExpress.XtraEditors.ComboBoxEdit port;
@@ -506,9 +514,9 @@
         private DevExpress.XtraEditors.CheckEdit sendASCII;
         private System.IO.Ports.SerialPort serialPort;
         private DevExpress.XtraEditors.LabelControl labelControl6;
-        private DevExpress.XtraEditors.CheckEdit checkEdit2;
-        private DevExpress.XtraEditors.CheckEdit checkEdit1;
-        private System.Windows.Forms.TextBox textBox1;
+        private DevExpress.XtraEditors.CheckEdit selectCycle;
+        private DevExpress.XtraEditors.CheckEdit randomCheck;
+        private System.Windows.Forms.TextBox cycleTime;
     }
 }
 
